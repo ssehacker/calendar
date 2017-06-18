@@ -172,7 +172,7 @@ var Calendar = (function(){
 			var hl = HuangLi['y'+current.year][formateDayD4(current.month,current.day)];
 			showHL(hl);
 		}else if(current.year>=hlMinYear && current.year<=hlMaxYear){
-			$.getScript(hlurl+'hl'+current.year+'.min.js',function(){
+			$.getScript(hlurl+'hl'+current.year+'.js',function(){
 				var hl = HuangLi['y'+current.year][formateDayD4(current.month,current.day)];
 				showHL(hl);
 			});
@@ -230,7 +230,7 @@ var Calendar = (function(){
 
 		for(var i=0;i<DATA.monthData.length;i++){
 			var itemData = DATA.monthData[i];
-
+			debugger;
 			if(i%7==0){ //某行第一列
 				dateHtml+='<div class="date_row">'
 			};
@@ -357,7 +357,11 @@ var Calendar = (function(){
 		});
 
 		$('.today').hammer().on('tap',function(event){
-			pageDate(1,now.getFullYear(),now.getMonth()+1,now.getDate());
+			console.log(current);
+			var currentTime = new Date(current.year, current.month, current.day).getTime();
+			var nowTime = new Date(now.getFullYear(),now.getMonth()+1,now.getDate()).getTime();
+			var dir = nowTime > currentTime ? 1 : -1;
+			pageDate( dir,now.getFullYear(),now.getMonth()+1,now.getDate());
 			return false;
 		});
 
